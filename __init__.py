@@ -69,7 +69,7 @@ class GeekHueSkill(MycroftSkill):
     def handle_group_light(self, message):
         phrase_group = message.data['Group']
         action = message.data['Action']
-        LOGGER.debug("The action is {} and the group is {}".format(action, group))
+        LOGGER.debug("The action is {} and the group is {}".format(action, phrase_group))
         LOGGER.debug("This is the bridge info: {}".format(self.bridge))
         bridge = _connect_bridge(self.bridge)
         group_name = get_group_name(bridge, phrase_group)
