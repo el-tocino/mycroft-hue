@@ -74,7 +74,7 @@ class GeekHueSkill(MycroftSkill):
         LOGGER.debug("This is the bridge info: {}".format(self.bridge))
         bridge = _connect_bridge(self.bridge)
         group_name = get_group_name(bridge, phrase_group)
-        LOGGER.debug("The group we would {} on is {}".format(action, group_name[0]))
+        LOGGER.debug("The group we would turn {} is {}".format(action, group_name[0]))
         LOGGER.debug("Is the group on: {}".format(group_name[1]))
         LOGGER.debug("The lights in this group are: {}".format(group_name[2]))
 
