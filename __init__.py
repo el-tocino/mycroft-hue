@@ -38,7 +38,22 @@ LOGGER = getLogger(__name__)
 
 def _connect_bridge(bridge):
     bridge.connect()
-    LOGGER.debug("This is the bridge api: {}".format(bridge.get_api()))
+    LOGGER.debug("This is the bridge ip: {}".format(bridge.ip))
+    return bridge
+
+def get_group_name(bridge, phrase_group):
+    groups = bridge.get_group()
+    best_score = 75
+    best_group = None
+    for line in groups:
+        score = fuzz.ratio(phrase, groups[line]['name'])
+        if score > best_score:
+            print(score)
+            best_score = score
+            group_name = groups[line]['name']
+            hue_group = groups[line]
+            group_lights = groups[line]['lights']
+    return group_name
 
 
 # The logic of each skill is contained within its own class, which inherits
@@ -50,13 +65,17 @@ class GeekHueSkill(MycroftSkill):
         self.ip = self.config.get('bridge_ip')
         self.bridge = Bridge(self.ip)
 
-    @intent_handler(IntentBuilder('GroupLightOnIntent').require("GroupLightOnKeyword").require('Action').require('Group').build())
-    def handle_group_light_on(self, message):
-        group = message.data['Group']
+    @intent_handler(IntentBuilder('GroupLightIntent').require("GroupLightKeyword").require('Action').require('Group').build())
+    def handle_group_light(self, message):
+        phrase_group = message.data['Group']
         action = message.data['Action']
         LOGGER.debug("The action is {} and the group is {}".format(action, group))
         LOGGER.debug("This is the bridge info: {}".format(self.bridge))
-        _connect_bridge(self.bridge)
+        bridge = _connect_bridge(self.bridge)
+        group_name = get_group_name(bridge, phrase_group)
+        LOGGER.debug("The group we would turn on is")
+
+
 
     # The "stop" method defines what Mycroft does when told to stop during
     # the skill's execution. In this case, since the skill's functionality
