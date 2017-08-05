@@ -37,11 +37,13 @@ __author__ = 'brihopki'
 LOGGER = getLogger(__name__)
 
 def _connect_bridge(bridge):
+    # Connecting to bridge
     bridge.connect()
     LOGGER.debug("This is the bridge ip: {}".format(bridge.ip))
     return bridge
 
 def get_group_name(bridge, phrase_group):
+    # Getting groups object from the bridge class
     groups = bridge.get_group()
     best_score = 75
     best_group = None
@@ -70,7 +72,6 @@ class GeekHueSkill(MycroftSkill):
     def handle_group_light(self, message):
         phrase_group = message.data['Group']
         action = message.data['Action']
-        LOGGER.debug("The action is {} and the group is {}".format(action, phrase_group))
         LOGGER.debug("This is the bridge info: {}".format(self.bridge))
         bridge = _connect_bridge(self.bridge)
         group = get_group_name(bridge, phrase_group)
