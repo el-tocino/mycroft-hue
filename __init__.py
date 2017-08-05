@@ -56,6 +56,7 @@ class GeekHueSkill(MycroftSkill):
         action = message.data['Action']
         LOGGER.debug("The action is {} and the group is {}".format(action, group))
         LOGGER.debug("This is the bridge info: {}".format(self.bridge))
+        _connect_bridge(self.bridge)
 
     # The "stop" method defines what Mycroft does when told to stop during
     # the skill's execution. In this case, since the skill's functionality
