@@ -1,0 +1,11 @@
+{
+  "identifier": "GeekHueSkill",
+  "name": "Hue",
+  "skillMetadata": {
+     "bridge_info": [
+        {
+           "bridge_ip": "ip"
+        }
+     ]
+  }
+}
