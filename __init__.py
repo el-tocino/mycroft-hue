@@ -24,9 +24,8 @@
 # Import statements: the list of outside modules you'll be using in your
 # skills, whether from other files in mycroft-core or from external libraries
 from os.path import dirname
-
-from adapt.intent import IntentBuilder
 from mycroft.skills.core import MycroftSkill, intent_handler
+from adapt.intent import IntentBuilder
 from mycroft.util.log import getLogger
 from phue import Bridge
 from fuzzywuzzy import fuzz
@@ -42,12 +41,12 @@ LOGGER = getLogger(__name__)
 # "class ____Skill(MycroftSkill)"
 class GeekHueSkill(MycroftSkill):
     def __init__(self):
-        super(GeekHueSkill, self).__init__('GeekHueSkill')
+        super(GeekHueSkill, self).__init__(name='GeekHueSkill')
 
     @intent_handler(IntentBuilder('GroupLightOnIntent').require("GroupLightOnKeyword").require("Group").build())
     def handle_group_light_on(self, message):
         group = message.data['Group']
-        LOGGER.debug("This is the message data: {}".format(message.data))
+        LOGGER.debug("This is the group: {}".format(group))
 
 
     # The "stop" method defines what Mycroft does when told to stop during
