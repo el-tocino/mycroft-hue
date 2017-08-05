@@ -52,8 +52,9 @@ def get_group_name(bridge, phrase_group):
             best_score = score
             group_name = groups[line]['name']
             hue_group = groups[line]
+            group_on = groups[line]['state']['any_on']
             group_lights = groups[line]['lights']
-    return group_name, hue_group, group_lights
+    return group_name, group_on, group_lights
 
 
 # The logic of each skill is contained within its own class, which inherits
@@ -74,7 +75,7 @@ class GeekHueSkill(MycroftSkill):
         bridge = _connect_bridge(self.bridge)
         group_name = get_group_name(bridge, phrase_group)
         LOGGER.debug("The group we would turn on is {}".format(group_name[0]))
-        LOGGER.debug("The hue group data is: {}".format(group_name[1]))
+        LOGGER.debug("Is the group on: {}".format(group_name[1]))
         LOGGER.debug("The lights in this group are: {}".format(group_name[2]))
 
 
