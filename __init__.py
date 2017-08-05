@@ -43,7 +43,7 @@ class GeekHueSkill(MycroftSkill):
     def __init__(self):
         super(GeekHueSkill, self).__init__(name='GeekHueSkill')
 
-    @intent_handler(IntentBuilder('GroupLightOnIntent').require("GroupLightOnKeyword").build())
+    @intent_handler(IntentBuilder('GroupLightOnIntent').require("GroupLightOnKeyword").optionally('Action').optionally('Group').build())
     def handle_group_light_on(self, message):
         LOGGER.debug("This is the message: {}".format(message.data))
 
