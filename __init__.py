@@ -81,7 +81,7 @@ class GeekHueSkill(MycroftSkill):
             if group_on == False:
                 LOGGER.debug("The group we would turn {} is {}".format(action, group_name))
             else:
-                LOGGER.debug("Group {} is already {}".format(group_name))
+                LOGGER.debug("Group {} is already {}".format(group_name, action))
         else:
             if group_on == True:
                 LOGGER.debug("The group we would turn {} is {}".format(action, group_name))
