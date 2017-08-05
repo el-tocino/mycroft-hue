@@ -45,8 +45,8 @@ LOGGER = getLogger(__name__)
 class GeekHueSkill(MycroftSkill):
     def __init__(self):
         super(GeekHueSkill, self).__init__(name='GeekHueSkill')
-        self.ip = self.config.get('bridge_ip')
-        self.bridge = Bridge(self.ip)
+        #self.ip = self.config.get('bridge_ip')
+        #self.bridge = Bridge(self.ip)
 
     @intent_handler(IntentBuilder('GroupLightOnIntent').require("GroupLightOnKeyword").require('Action').require('Group').build())
     def handle_group_light_on(self, message):
