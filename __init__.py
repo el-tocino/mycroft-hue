@@ -42,10 +42,8 @@ LOGGER = getLogger(__name__)
 class GeekHueSkill(MycroftSkill):
     def __init__(self):
         super(GeekHueSkill, self).__init__(name='GeekHueSkill')
-        self.load_data_files(dirname(__file__))
-        self.load_regex_files(join(dirname(__file__), 'regex', self.lang))
 
-    @intent_handler(IntentBuilder('GroupLightOnIntent').require("GroupLightOnKeyword").require("Group").build())
+    @intent_handler(IntentBuilder('GroupLightOnIntent').require("GroupLightOnKeyword").build())
     def handle_group_light_on(self, message):
         group = message.data['Group']
         LOGGER.debug("This is the group: {}".format(group))
