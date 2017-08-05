@@ -46,7 +46,7 @@ class GeekHueSkill(MycroftSkill):
     @intent_handler(IntentBuilder('GroupLightOnIntent').require("GroupLightOnKeyword").build())
     def handle_group_light_on(self, message):
         group = message.data['Group']
-        LOGGER.debug("This is the group: {}".format(group))
+        LOGGER.debug("This is the message: {}".format(message.data))
 
 
     # The "stop" method defines what Mycroft does when told to stop during
