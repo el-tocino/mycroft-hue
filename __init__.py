@@ -45,7 +45,6 @@ class GeekHueSkill(MycroftSkill):
 
     @intent_handler(IntentBuilder('GroupLightOnIntent').require("GroupLightOnKeyword").build())
     def handle_group_light_on(self, message):
-        group = message.data['Group']
         LOGGER.debug("This is the message: {}".format(message.data))
 
 
