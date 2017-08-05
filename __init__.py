@@ -26,7 +26,7 @@
 from os.path import dirname
 
 from adapt.intent import IntentBuilder
-from mycroft.skills.core import MycroftSkill
+from mycroft.skills.core import MycroftSkill, intent_handler
 from mycroft.util.log import getLogger
 from phue import Bridge
 from fuzzywuzzy import fuzz
@@ -41,6 +41,9 @@ LOGGER = getLogger(__name__)
 # base methods from the MycroftSkill class with the syntax you can see below:
 # "class ____Skill(MycroftSkill)"
 class GeekHueSkill(MycroftSkill):
+    def __init__(self):
+        super(GeekHueSkill, self).__init__('GeekHueSkill')
+
     @intent_handler(IntentBuilder('GroupLightIntent').require("GroupLightKeyword").require('group').build())
     def handle_group_light(self, message):
         group = message.data['group']
