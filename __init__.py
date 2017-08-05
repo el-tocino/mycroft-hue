@@ -73,10 +73,20 @@ class GeekHueSkill(MycroftSkill):
         LOGGER.debug("The action is {} and the group is {}".format(action, phrase_group))
         LOGGER.debug("This is the bridge info: {}".format(self.bridge))
         bridge = _connect_bridge(self.bridge)
-        group_name = get_group_name(bridge, phrase_group)
-        LOGGER.debug("The group we would turn {} is {}".format(action, group_name[0]))
-        LOGGER.debug("Is the group on: {}".format(group_name[1]))
-        LOGGER.debug("The lights in this group are: {}".format(group_name[2]))
+        group = get_group_name(bridge, phrase_group)
+        group_on = group[1]
+        group_name = group[0]
+        group_lights = group[2]
+        if action == 'on':
+            if group_on == False:
+                LOGGER.debug("The group we would turn {} is {}".format(action, group_name))
+            else:
+                LOGGER.debug("Group {} is already {}".format(group_name))
+        else:
+            if group_on == True:
+                LOGGER.debug("The group we would turn {} is {}".format(action, group_name))
+            else:
+                LOGGER.debug("The group {} is already {}".format(group_name, action))
 
 
 
