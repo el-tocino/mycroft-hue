@@ -46,7 +46,7 @@ def get_group_name(bridge, phrase_group):
     best_score = 75
     best_group = None
     for line in groups:
-        score = fuzz.ratio(phrase, groups[line]['name'])
+        score = fuzz.ratio(phrase_group, groups[line]['name'])
         if score > best_score:
             print(score)
             best_score = score
