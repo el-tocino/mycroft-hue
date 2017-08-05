@@ -36,7 +36,9 @@ __author__ = 'brihopki'
 # statements will show up in the command line when running Mycroft.
 LOGGER = getLogger(__name__)
 
-
+def _connect_bridge(bridge):
+    bridge.connect()
+    LOGGER.debug("This is the bridge api: {}".format(bridge.get_api()))
 
 
 # The logic of each skill is contained within its own class, which inherits
