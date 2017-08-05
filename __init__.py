@@ -48,7 +48,6 @@ class GeekHueSkill(MycroftSkill):
     def handle_group_light_on(self, message):
         group = message.data['Group']
         LOGGER.debug("This is the message: {}".format(message))
-        LOGGER.debug("The group is {} and the action is {}".format(group, action))
 
 
     # The "stop" method defines what Mycroft does when told to stop during
