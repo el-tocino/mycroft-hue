@@ -36,19 +36,24 @@ __author__ = 'brihopki'
 # statements will show up in the command line when running Mycroft.
 LOGGER = getLogger(__name__)
 
+
+
+
 # The logic of each skill is contained within its own class, which inherits
 # base methods from the MycroftSkill class with the syntax you can see below:
 # "class ____Skill(MycroftSkill)"
 class GeekHueSkill(MycroftSkill):
     def __init__(self):
         super(GeekHueSkill, self).__init__(name='GeekHueSkill')
+        self.ip = self.config.get('bridge_ip')
+        self.bridge = Bridge(self.ip)
 
     @intent_handler(IntentBuilder('GroupLightOnIntent').require("GroupLightOnKeyword").require('Action').require('Group').build())
     def handle_group_light_on(self, message):
         group = message.data['Group']
         action = message.data['Action']
         LOGGER.debug("The action is {} and the group is {}".format(action, group))
-
+        LOGGER.debug("This is the bridge info: {}".format(self.bridge))
 
     # The "stop" method defines what Mycroft does when told to stop during
     # the skill's execution. In this case, since the skill's functionality
