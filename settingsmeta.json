@@ -2,10 +2,18 @@
   "identifier": "GeekHueSkill",
   "name": "Hue",
   "skillMetadata": {
-     "bridge_info": [
-        {
-           "bridge_ip": "ip"
-        }
-     ]
+     "sections": [
+          {
+              "name": "bridge ip",
+              "fields": [
+                  {
+                      "name": "bridge ip",
+                      "type": "text",
+                      "label": "bridge ip",
+                      "value": ""
+                  }
+              ]
+          }
+      ]
   }
 }
