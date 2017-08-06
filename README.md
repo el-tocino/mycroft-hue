@@ -23,6 +23,8 @@ Working features:
     - turn off office
     - switch on office
     - switch off office
+    - turn on all lights
+    - turn off all lights
 
 Known issues:
  - ...
