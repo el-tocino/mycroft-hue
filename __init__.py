@@ -58,6 +58,19 @@ def get_group_name(bridge, phrase_group):
             group_lights = groups[line]['lights']
     return group_name, group_on, group_lights
 
+def all_lights_on_off(bridge, action):
+    all_lights = []
+    lights = bridge.lights
+    for light in lights:
+        all_lights.append(light.name)
+    if action == 'on':
+        bridge.set_light(all_lights, 'on', True )
+        LOGGER.debug("Turning on all lights")
+    else:
+        bridge.set_light(all_lights, 'on', False)
+        LOGGER.debug("Turning off all lights")
+
+
 
 # The logic of each skill is contained within its own class, which inherits
 # base methods from the MycroftSkill class with the syntax you can see below:
@@ -79,24 +92,27 @@ class GeekHueSkill(MycroftSkill):
         group_name = group[0]
         group_lights = group[2]
         group_id = ''
-        if action == 'on':
-            if group_on == False:
-                LOGGER.debug("The group we would turn {} is {}".format(action, group_name))
-                group_id = bridge.get_group_id_by_name(group_name)
-                bridge.set_group(group_name, 'on', True)
-                self.speak("Turned {} group {}".format(action, group_name))
-            else:
-                LOGGER.debug("Group {} is already {}".format(group_name, action))
-                self.speak("Group {} is already {}".format(group_name, action))
+        if phrase_group == 'all lights':
+            all_lights_on_off(bridge, action)
         else:
-            if group_on == True:
-                LOGGER.debug("The group we would turn {} is {}".format(action, group_name))
-                group_id = bridge.get_group_id_by_name(group_name)
-                bridge.set_group(group_name, 'on', False)
-                self.speak("Turned {} group {}".format(action, group_name))
+            if action == 'on':
+                if group_on == False:
+                    LOGGER.debug("The group we would turn {} is {}".format(action, group_name))
+                    group_id = bridge.get_group_id_by_name(group_name)
+                    bridge.set_group(group_name, 'on', True)
+                    self.speak("Turned {} group {}".format(action, group_name))
+                else:
+                    LOGGER.debug("Group {} is already {}".format(group_name, action))
+                    self.speak("Group {} is already {}".format(group_name, action))
             else:
-                LOGGER.debug("The group {} is already {}".format(group_name, action))
-                self.speak("Group {} is already {}".format(group_name, action))
+                if group_on == True:
+                    LOGGER.debug("The group we would turn {} is {}".format(action, group_name))
+                    group_id = bridge.get_group_id_by_name(group_name)
+                    bridge.set_group(group_name, 'on', False)
+                    self.speak("Turned {} group {}".format(action, group_name))
+                else:
+                    LOGGER.debug("The group {} is already {}".format(group_name, action))
+                    self.speak("Group {} is already {}".format(group_name, action))
 
 
 
