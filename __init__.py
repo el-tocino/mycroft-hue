@@ -89,7 +89,7 @@ class GeekHueSkill(MycroftSkill):
         bridge = _connect_bridge(self.bridge)
         if phrase_group == 'all lights':
             all_lights_on_off(bridge, action)
-            self.speak("Turned off all lights")
+            self.speak("Turned {} all lights".format(action))
         else:
             group = get_group_name(bridge, phrase_group)
             group_on = group[1]
