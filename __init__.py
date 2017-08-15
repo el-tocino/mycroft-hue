@@ -70,6 +70,24 @@ def all_lights_on_off(bridge, action):
         bridge.set_light(all_lights, 'on', False)
         LOGGER.debug("Turning off all lights")
 
+def change_group_color(bridge, group, color):
+    hue_group = get_group_name(bridge, group)
+    if color == 'red':
+        bridge.set_group(hue_group, 'xy', [0.704, 0.296])
+        LOGGER.debug("Setting group {} to color {}".format(hue_group, color))
+    elif color == 'blue':
+        bridge.set_group(hue_group, 'xy', [0.138, 0.08])
+        LOGGER.debug("Setting group {} to color {}".format(hue_group, color))
+    elif color == 'yellow':
+        bridge.set_group(hue_group, 'xy', [0.4487, 0.4906])
+        LOGGER.debug("Setting group {} to color {}".format(hue_group, color))
+    elif color == 'purple':
+        bridge.set_group(hue_group, 'xy', [0.2217, 0.1126])
+        LOGGER.debug("Setting group {} to color {}".format(hue_group, color))
+    else:
+        bridge.set_group(hue_group, 'xy', [0.3107, 0.3288])
+        LOGGER.debug("Setting group {} to color {}".format(hue_group, color))
+
 
 
 # The logic of each skill is contained within its own class, which inherits
@@ -85,6 +103,9 @@ class GeekHueSkill(MycroftSkill):
     def handle_group_light(self, message):
         phrase_group = message.data['Group']
         action = message.data['Action']
+        color = message.data['Color']
+        if color:
+            print("The action is {} and the color is {}".format(action, color))
         LOGGER.debug("This is the bridge info: {}".format(self.bridge))
         bridge = _connect_bridge(self.bridge)
         if phrase_group == 'all lights':
