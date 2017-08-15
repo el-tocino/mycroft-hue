@@ -99,13 +99,17 @@ class GeekHueSkill(MycroftSkill):
         self.ip = self.config.get('bridge_ip')
         self.bridge = Bridge(self.ip)
 
-    @intent_handler(IntentBuilder('GroupLightIntent').require("GroupLightKeyword").optionally('Color').require('Action').require('Group').build())
+    @intent_handler(IntentBuilder('GroupColorIntent').require("GroupLightKeyword").require('Action').require('Group').require('Color').build())
+    def handle_group_color(self, message):
+        color = message.data['Color']
+        group = message.data['Group']
+        action = message.data['Action']
+        LOGGER.debug("The color is {} the group is {} and the action is {}".format(color, group, action))
+
+    @intent_handler(IntentBuilder('GroupLightIntent').require("GroupLightKeyword").require('Action').require('Group').build())
     def handle_group_light(self, message):
         phrase_group = message.data['Group']
         action = message.data['Action']
-        color = message.data['Color']
-        if color:
-            print("The action is {} and the color is {}".format(action, color))
         LOGGER.debug("This is the bridge info: {}".format(self.bridge))
         bridge = _connect_bridge(self.bridge)
         if phrase_group == 'all lights':
@@ -135,8 +139,6 @@ class GeekHueSkill(MycroftSkill):
                 else:
                     LOGGER.debug("The group {} is already {}".format(group_name, action))
                     self.speak("Group {} is already {}".format(group_name, action))
-
-
 
     # The "stop" method defines what Mycroft does when told to stop during
     # the skill's execution. In this case, since the skill's functionality
