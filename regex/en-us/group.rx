@@ -1,2 +1,2 @@
 (turn|switch) (?P<Action>on|off) (?P<Group>.*)
-(set|change) (?P<Action>color) (?P<Group>\D+)\s+(?P<Color>\D+)
+(set|change) color (?P<Group>\D+)\s+(?P<Color>\D+)
