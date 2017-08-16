@@ -109,8 +109,8 @@ class GeekHueSkill(MycroftSkill):
         group = message.data['Group']
         LOGGER.debug("The color is {} the group is {}.".format(color, group))
         bridge = _connect_bridge(self.bridge)
-        change_group_color(bridge, group, color)
-        self.speak("Changed the {} to color {}".format(group, color))
+        color_group = change_group_color(bridge, group, color)
+        self.speak("Changed the {} to color {}".format(color_group[0], color))
 
 
     @intent_handler(IntentBuilder('GroupLightIntent').require("GroupLightKeyword").require('Action').require('Group').build())
