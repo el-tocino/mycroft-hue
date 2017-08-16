@@ -45,7 +45,7 @@ def _connect_bridge(bridge):
 def get_group_name(bridge, phrase_group):
     # Getting groups object from the bridge class
     groups = bridge.get_group()
-    best_score = 75
+    best_score = 50
     best_group = None
     for line in groups:
         score = fuzz.ratio(phrase_group, groups[line]['name'])
@@ -70,6 +70,29 @@ def all_lights_on_off(bridge, action):
         bridge.set_light(all_lights, 'on', False)
         LOGGER.debug("Turning off all lights")
 
+def change_group_color(bridge, group, color):
+    hue_group = get_group_name(bridge, group)
+    LOGGER.debug("This is the hue group: {}".format(hue_group[0]))
+    if color == 'red' or color == 'read':
+        bridge.set_group(hue_group[0], 'xy', [0.704, 0.296])
+        LOGGER.debug("Setting group {} to color {}".format(hue_group[0], color))
+    elif color == 'blue':
+        bridge.set_group(hue_group[0], 'xy', [0.138, 0.08])
+        LOGGER.debug("Setting group {} to color {}".format(hue_group[0], color))
+    elif color == 'yellow':
+        bridge.set_group(hue_group[0], 'xy', [0.4487, 0.4906])
+        LOGGER.debug("Setting group {} to color {}".format(hue_group[0], color))
+    elif color == 'purple':
+        bridge.set_group(hue_group[0], 'xy', [0.2217, 0.1126])
+        LOGGER.debug("Setting group {} to color {}".format(hue_group[0], color))
+    elif color == 'green':
+        bridge.set_group(hue_group[0], 'xy', [0.409, 0.518])
+        LOGGER.debug("Setting group {} to color {}".format(hue_group[0], color))
+    else:
+        bridge.set_group(hue_group[0], 'xy', [0.3107, 0.3288])
+        LOGGER.debug("Setting group {} to color {}".format(hue_group[0], color))
+    return hue_group[0]
+
 
 
 # The logic of each skill is contained within its own class, which inherits
@@ -80,6 +103,16 @@ class GeekHueSkill(MycroftSkill):
         super(GeekHueSkill, self).__init__(name='GeekHueSkill')
         self.ip = self.config.get('bridge_ip')
         self.bridge = Bridge(self.ip)
+
+    @intent_handler(IntentBuilder('GroupColorIntent').require("GroupColorKeyword").require('Group').require('Color').build())
+    def handle_group_color(self, message):
+        color = message.data['Color']
+        group = message.data['Group']
+        LOGGER.debug("The color is {} the group is {}.".format(color, group))
+        bridge = _connect_bridge(self.bridge)
+        color_group = change_group_color(bridge, group, color)
+        self.speak("Changed the {} to color {}".format(color_group, color))
+
 
     @intent_handler(IntentBuilder('GroupLightIntent').require("GroupLightKeyword").require('Action').require('Group').build())
     def handle_group_light(self, message):
@@ -114,8 +147,6 @@ class GeekHueSkill(MycroftSkill):
                 else:
                     LOGGER.debug("The group {} is already {}".format(group_name, action))
                     self.speak("Group {} is already {}".format(group_name, action))
-
-
 
     # The "stop" method defines what Mycroft does when told to stop during
     # the skill's execution. In this case, since the skill's functionality
