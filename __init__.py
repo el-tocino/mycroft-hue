@@ -72,6 +72,7 @@ def all_lights_on_off(bridge, action):
 
 def change_group_color(bridge, group, color):
     hue_group = get_group_name(bridge, group)
+    LOGGER.debug(hue_group)
     if color == 'red':
         bridge.set_group(hue_group, 'xy', [0.704, 0.296])
         LOGGER.debug("Setting group {} to color {}".format(hue_group, color))
