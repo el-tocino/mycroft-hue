@@ -99,7 +99,7 @@ class GeekHueSkill(MycroftSkill):
         self.ip = self.config.get('bridge_ip')
         self.bridge = Bridge(self.ip)
 
-    @intent_handler(IntentBuilder('GroupColorIntent').require("GroupColorKeyword").require('Action').require('Group').require('Color').build())
+    @intent_handler(IntentBuilder('GroupColorIntent').require("GroupColorKeyword").require('Group').require('Color').build())
     def handle_group_color(self, message):
         color = message.data['Color']
         group = message.data['Group']
