@@ -91,6 +91,7 @@ def change_group_color(bridge, group, color):
     else:
         bridge.set_group(hue_group[0], 'xy', [0.3107, 0.3288])
         LOGGER.debug("Setting group {} to color {}".format(hue_group[0], color))
+    return hue_group[0]
 
 
 
