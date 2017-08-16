@@ -85,7 +85,7 @@ def change_group_color(bridge, group, color):
     elif color == 'purple':
         bridge.set_group(hue_group[0], 'xy', [0.2217, 0.1126])
         LOGGER.debug("Setting group {} to color {}".format(hue_group[0], color))
-    elif color == 'green'
+    elif color == 'green':
         bridge.set_group(hue_group[0], 'xy', [0.409, 0.518])
         LOGGER.debug("Setting group {} to color {}".format(hue_group[0], color))
     else:
