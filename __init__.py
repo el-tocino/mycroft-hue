@@ -45,7 +45,7 @@ def _connect_bridge(bridge):
 def get_group_name(bridge, phrase_group):
     # Getting groups object from the bridge class
     groups = bridge.get_group()
-    best_score = 75
+    best_score = 50
     best_group = None
     for line in groups:
         score = fuzz.ratio(phrase_group, groups[line]['name'])
