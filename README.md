@@ -26,6 +26,15 @@ Working features:
     - turn on all lights
     - turn off all lights
 
+ - Can change to the below colors currently by saying "Change/Set Office(Groupname) blue(Color)" the current colors supported are below.  If it doesn't know what color you are asking for it will default changing to white.
+    - blue
+    - red
+    - yellow
+    - green
+    - purple
+    - white
+
+
 Known issues:
  - ...
 
