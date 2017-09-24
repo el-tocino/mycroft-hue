@@ -29,6 +29,10 @@ from adapt.intent import IntentBuilder
 from mycroft.util.log import getLogger
 from phue import Bridge
 from fuzzywuzzy import fuzz
+import webcolors
+from rgbxy import Converter
+from rgbxy import GamutC
+
 
 __author__ = 'brihopki'
 
@@ -64,7 +68,7 @@ def all_lights_on_off(bridge, action):
     for light in lights:
         all_lights.append(light.name)
     if action == 'on':
-        bridge.set_light(all_lights, 'on', True )
+        bridge.set_light(all_lights, 'on', True)
         LOGGER.debug("Turning on all lights")
     else:
         bridge.set_light(all_lights, 'on', False)
@@ -73,24 +77,11 @@ def all_lights_on_off(bridge, action):
 def change_group_color(bridge, group, color):
     hue_group = get_group_name(bridge, group)
     LOGGER.debug("This is the hue group: {}".format(hue_group[0]))
-    if color == 'red' or color == 'read':
-        bridge.set_group(hue_group[0], 'xy', [0.704, 0.296])
-        LOGGER.debug("Setting group {} to color {}".format(hue_group[0], color))
-    elif color == 'blue':
-        bridge.set_group(hue_group[0], 'xy', [0.138, 0.08])
-        LOGGER.debug("Setting group {} to color {}".format(hue_group[0], color))
-    elif color == 'yellow':
-        bridge.set_group(hue_group[0], 'xy', [0.4487, 0.4906])
-        LOGGER.debug("Setting group {} to color {}".format(hue_group[0], color))
-    elif color == 'purple':
-        bridge.set_group(hue_group[0], 'xy', [0.2217, 0.1126])
-        LOGGER.debug("Setting group {} to color {}".format(hue_group[0], color))
-    elif color == 'green':
-        bridge.set_group(hue_group[0], 'xy', [0.409, 0.518])
-        LOGGER.debug("Setting group {} to color {}".format(hue_group[0], color))
-    else:
-        bridge.set_group(hue_group[0], 'xy', [0.3107, 0.3288])
-        LOGGER.debug("Setting group {} to color {}".format(hue_group[0], color))
+    color_rgb = webcolors.html5_parse_legacy_color(unicode(color))
+    converterc = Converter(GamutC)
+    color_xy = converterc.rgb_to_xy(*color_rgb)
+    bridge.set_group(hue_group[0], 'xy', *color_xy)
+    LOGGER.debug("Setting group {} to color {}".format(hue_group[0], *color_rgb))
     return hue_group[0]
 
 
