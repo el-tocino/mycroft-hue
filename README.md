@@ -12,7 +12,7 @@ To get this done we need
   "bridge_ip": "X.X.X.X"
  }
 ```
-2. msm install https://github.com/Geeked-Out-Solutions/mycroft-hue.git
+2. msm install GITHUBURL HERE
 
 
 ## Current state
