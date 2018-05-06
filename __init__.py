@@ -54,13 +54,25 @@ def get_group_name(bridge, phrase_group):
     for line in groups:
         score = fuzz.ratio(phrase_group, groups[line]['name'])
         if score > best_score:
-            LOGGER.debug("The score is {}".format(score))
             best_score = score
             group_name = groups[line]['name']
+            best_group = group_name
             hue_group = groups[line]
             group_on = groups[line]['state']['any_on']
             group_lights = groups[line]['lights']
-    return group_name, group_on, group_lights
+            islight = 0
+    else:
+        thelights = bridge.get_light_objects()
+        for line in thelights:
+            score = fuzz.ration(phrase_group, line.name)
+            if score > best_score:
+                best_score = score            
+                group_name = line.name
+                islight = 1
+                group_lights = line.name
+                group_on = line.on
+                                
+    return group_name, group_on, group_lights, islight
 
 def all_lights_on_off(bridge, action):
     all_lights = []
@@ -76,14 +88,22 @@ def all_lights_on_off(bridge, action):
 
 def change_group_color(bridge, group, color):
     hue_group = get_group_name(bridge, group)
-    LOGGER.debug("This is the hue group: {}".format(hue_group[0]))
-    color_rgb = webcolors.html5_parse_legacy_color(unicode(color))
-    converterc = Converter(GamutC)
-    color_xy = converterc.rgb_to_xy(*color_rgb)
-    bridge.set_group(hue_group[0], 'xy', *color_xy)
-    LOGGER.debug("Setting group {} to color {}".format(hue_group[0], *color_rgb))
-    return hue_group[0]
-
+    if hue_group.islight = 0:
+        LOGGER.debug("This is the hue group: {}".format(hue_group[0]))
+        color_rgb = webcolors.html5_parse_legacy_color(unicode(color))
+        converterc = Converter(GamutC)
+        color_xy = converterc.rgb_to_xy(*color_rgb)
+        bridge.set_group(hue_group[0], 'xy', *color_xy)
+        LOGGER.debug("Setting group {} to color {}".format(hue_group[0], *color_rgb))
+        return hue_group[0]
+    else:
+        LOGGER.debug("This is the light: {}".format(hue_group[0]))
+        color_rgb = webcolors.html5_parse_legacy_color(unicode(color))
+        converterc = Converter(GamutC)
+        color_xy = converterc.rgb_to_xy(*color_rgb)
+        bridge.set_light(hue_group[0], 'xy', *color_xy)
+        LOGGER.debug("Setting group {} to color {}".format(hue_group[0], *color_rgb))
+        return hue_group[0]
 
 
 # The logic of each skill is contained within its own class, which inherits
@@ -120,24 +140,44 @@ class GeekHueSkill(MycroftSkill):
             group_name = group[0]
             group_lights = group[2]
             group_id = ''
-            if action == 'on':
-                if group_on == False:
-                    LOGGER.debug("The group we would turn {} is {}".format(action, group_name))
-                    group_id = bridge.get_group_id_by_name(group_name)
-                    bridge.set_group(group_name, 'on', True)
-                    self.speak("Turned {} group {}".format(action, group_name))
+            if group[3] = 0:
+                if action == 'on':
+                    if group_on == False:
+                        LOGGER.debug("The group we would turn {} is {}".format(action, group_name))
+                        group_id = bridge.get_group_id_by_name(group_name)
+                        bridge.set_group(group_name, 'on', True)
+                        self.speak("Turned {} group {}".format(action, group_name))
+                    else:
+                        LOGGER.debug("Group {} is already {}".format(group_name, action))
+                        self.speak("Group {} is already {}".format(group_name, action))
                 else:
-                    LOGGER.debug("Group {} is already {}".format(group_name, action))
-                    self.speak("Group {} is already {}".format(group_name, action))
+                    if group_on == True:
+                        LOGGER.debug("The group we would turn {} is {}".format(action, group_name))
+                        group_id = bridge.get_group_id_by_name(group_name)
+                        bridge.set_group(group_name, 'on', False)
+                        self.speak("Turned {} group {}".format(action, group_name))
+                    else:
+                        LOGGER.debug("The group {} is already {}".format(group_name, action))
+                        self.speak("Group {} is already {}".format(group_name, action))
             else:
-                if group_on == True:
-                    LOGGER.debug("The group we would turn {} is {}".format(action, group_name))
-                    group_id = bridge.get_group_id_by_name(group_name)
-                    bridge.set_group(group_name, 'on', False)
-                    self.speak("Turned {} group {}".format(action, group_name))
+                if action == 'on':
+                    if group_on == False:
+                        LOGGER.debug("The group we would turn {} is {}".format(action, group_name))
+                        bridge.set_light(group_name, 'on', True)
+                        self.speak("Turned {} group {}".format(action, group_name))
+                    else:
+                        LOGGER.debug("Group {} is already {}".format(group_name, action))
+                        self.speak("Group {} is already {}".format(group_name, action))
                 else:
-                    LOGGER.debug("The group {} is already {}".format(group_name, action))
-                    self.speak("Group {} is already {}".format(group_name, action))
+                    if group_on == True:
+                        LOGGER.debug("The group we would turn {} is {}".format(action, group_name))
+                        bridge.set_light(group_name, 'on', False)
+                        self.speak("Turned {} group {}".format(action, group_name))
+                    else:
+                        LOGGER.debug("The group {} is already {}".format(group_name, action))
+                        self.speak("Group {} is already {}".format(group_name, action))
+
+
 
     # The "stop" method defines what Mycroft does when told to stop during
     # the skill's execution. In this case, since the skill's functionality
