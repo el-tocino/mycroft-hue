@@ -34,6 +34,7 @@ Working features:
     - purple
     - white
 
+ - Lights can now be adjusted by name!
 
 Known issues:
  - ...
@@ -41,6 +42,5 @@ Known issues:
 TODO:
  - Auto discovery of hue bridge
  - Scenes on and off by name
- - Lights on and off by name
  - Give you back list of groups then you can say which one you want to turn on/off
  - Change to colors red, green, etc.
