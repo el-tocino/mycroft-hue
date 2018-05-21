@@ -1,6 +1,6 @@
 # Geek Hue skill
 
-This skill is a revamp of the existing hue skill using fuzzy matching for turning groups on and colors eventually, etc.
+This skill is a revamp of @btothayre's hue skill using fuzzy matching for turning groups on and colors eventually, etc.  (Not python 3 updated!)
 
 To get this done we need
   - phue
