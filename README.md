@@ -1,6 +1,6 @@
 # Geek Hue skill
 
-This skill is a revamp of @btothayre's hue skill using fuzzy matching for turning groups on and colors eventually, etc.  (Not python 3 updated!)
+This skill is a revamp of @btothayre's hue skill using fuzzy matching for turning groups on and colors eventually, etc.  (Should work with python 3)
 
 To get this done we need
   - phue
@@ -26,13 +26,9 @@ Working features:
     - turn on all lights
     - turn off all lights
 
- - Can change to the below colors currently by saying "Change/Set Office(Groupname) blue(Color)" or "Change/Set Office(Groupname) to blue(Color)" the current colors supported are below.  If it doesn't know what color you are asking for it will default changing to white.
-    - blue
-    - red
-    - yellow
-    - green
-    - purple
-    - white
+ - Can change to the below colors currently by saying "Change/Set Office(Groupname) blue(Color)" or "Change/Set Office(Groupname) to blue(Color)".  
+
+ - Supports webcolors names, ie, Chuck Norris, blue, light blue, mauve, taupe, etc.
 
  - Lights can now be adjusted by name!
 
