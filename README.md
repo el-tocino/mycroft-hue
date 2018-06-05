@@ -1,18 +1,11 @@
 # Geek Hue skill
 
-This skill is a revamp of @btothayre's hue skill using fuzzy matching for turning groups on and colors eventually, etc.  (Should work with python 3)
+This skill is a revamp of @btothayre's hue skill using fuzzy matching for adjusting lights, groups, and colors.  (Should work with python 3 now as well?)
 
-To get this done we need
-  - phue
 
 # Installation/Setup
-1. Modify your mycroft.conf file and add the following section replacing with your hue bridge IP:
-```
-"GeekHueSkill": {
-  "bridge_ip": "X.X.X.X"
- }
-```
-2. msm install GITHUBURL HERE
+1. msm install GITHUBURL HERE
+2. go to home.mycroft.ai and the skills and add your hue hub ip.
 
 
 ## Current state
@@ -30,7 +23,7 @@ Working features:
 
  - Supports webcolors names, ie, Chuck Norris, blue, light blue, mauve, taupe, etc.
 
- - Lights can now be adjusted by name!
+ - Lights can now be adjusted by name! 
 
 Known issues:
  - ...
