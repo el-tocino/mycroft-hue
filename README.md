@@ -6,7 +6,7 @@ This skill is a revamp of @btothayre's hue skill using fuzzy matching for adjust
 # Installation/Setup
 1. msm install GITHUBURL HERE
 2. go to home.mycroft.ai and the skills and add your hue hub ip.
-
+3. You'll have to pair with the hub at some point, so watch for that in the logs/cli...
 
 ## Current state
 
