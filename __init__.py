@@ -64,7 +64,7 @@ def get_group_name(bridge, phrase_group):
     else:
         thelights = bridge.get_light_objects()
         for line in thelights:
-            score = fuzz.ration(phrase_group, line.name)
+            score = fuzz.ratio(phrase_group, line.name)
             if score > best_score:
                 best_score = score            
                 group_name = line.name
